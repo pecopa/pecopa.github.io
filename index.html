@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Egor Stolyarov  - ML Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #F8F8F7;
+      --surface:  #FFFFFF;
+      --border:   #E4E4E2;
+      --text:     #1A1A1A;
+      --muted:    #6B6B6B;
+      --accent:   #2563EB;
+      --accent-l: #EFF4FF;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(248, 248, 247, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+    }
+
+    .nav-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Sections ── */
+    section { padding: 88px 0 0; }
+    section:last-child { padding-bottom: 88px; }
+
+    /* ── Hero ── */
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 0;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s forwards;
+    }
+
+    .hero-name {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.25s forwards;
+    }
+
+    .hero-bio {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s forwards;
+    }
+
+    .hero-contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.55s forwards;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── Section headings ── */
+    .section-heading {
+      font-size: 11px;
+      font-family: var(--mono);
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Skills ── */
+    .skills-group { margin-bottom: 24px; }
+
+    .skills-group-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 10px;
+      border-radius: 5px;
+    }
+
+    .tag.accent {
+      background: var(--accent-l);
+      border-color: #BFCFFB;
+      color: var(--accent);
+    }
+
+    /* ── Projects ── */
+    .project {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project:first-of-type { border-top: 1px solid var(--border); }
+
+    .project-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .project-title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .project-link {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .project-link:hover { text-decoration: underline; }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 14px;
+      max-width: 580px;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* ── Experience / Education ── */
+    .entry { margin-bottom: 32px; }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .entry-title {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .entry-date {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .entry-place {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .entry-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 580px;
+    }
+
+    /* ── Languages ── */
+    .lang-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lang-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 280px;
+    }
+
+    .lang-name { font-size: 14px; }
+
+    .lang-level {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-name { font-size: 32px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .hero-label, .hero-name, .hero-bio, .hero-contacts {
+        opacity: 1;
+        transform: none;
+        animation: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="container">
+    <a class="nav-name" href="#hero">Egor Stolyarov</a>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-label">ML Engineer</p>
+    <h1 class="hero-name">Egor Stolyarov</h1>
+    <p class="hero-bio">
+      Striving to make the world better through technology.
+      Studying Artificial Intelligence in Information Networks,
+      building ML systems and computer vision projects.
+    </p>
+    <div class="hero-contacts">
+      <a class="contact-link" >
+        <!-- email icon -->
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        sstolyarovegorr@gmail.com
+      </a>
+      <a class="contact-link" href="https://github.com/pecopa" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
+      <a class="contact-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8-1.7 8.12c-.12.57-.46.71-.93.44l-2.58-1.9-1.24 1.2c-.14.14-.26.26-.52.26l.18-2.62 4.72-4.26c.2-.18-.04-.28-.32-.1L8.06 14.4l-2.54-.8c-.55-.17-.56-.55.12-.82l9.94-3.83c.46-.17.86.11.71.82l-.65.03z"/></svg>
+        e80080080
+      </a>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="container">
+    <p class="section-heading reveal">Skills</p>
+
+    <div class="skills-group reveal">
+      <p class="skills-group-label">Core</p>
+      <div class="skill-tags">
+        <span class="tag accent">Python</span>
+        <span class="tag accent">Machine Learning</span>
+        <span class="tag accent">SQL</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">scikit-learn</span>
+        <span class="tag">Matplotlib</span>
+      </div>
+    </div>
+
+    <div class="skills-group reveal">
+      <p class="skills-group-label">ML / AI</p>
+      <div class="skill-tags">
+        <span class="tag">Gradient Boosting</span>
+        <span class="tag">Random Forest</span>
+        <span class="tag">SVD</span>
+        <span class="tag">TF-IDF</span>
+        <span class="tag">Collaborative Filtering</span>
+        <span class="tag">Content-Based Filtering</span>
+        <span class="tag">Computer Vision</span>
+      </div>
+    </div>
+
+    <div class="skills-group reveal">
+      <p class="skills-group-label">Tools & Deploy</p>
+      <div class="skill-tags">
+        <span class="tag">Git</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">SQLite</span>
+        <span class="tag">joblib</span>
+        <span class="tag">OpenCV</span>
+        <span class="tag">MediaPipe</span>
+      </div>
+    </div>
+
+    <div class="skills-group reveal">
+      <p class="skills-group-label">Currently learning</p>
+      <div class="skill-tags">
+        <span class="tag">PyTorch</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">Hugging Face</span>
+        <span class="tag">MLflow</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="container">
+    <p class="section-heading reveal">Projects</p>
+
+    <div class="project reveal">
+      <div class="project-header">
+        <span class="project-title">Gesture Window Switcher</span>
+        <a class="project-link" href="https://github.com/pecopa/BodyTracker-Gestureswitcher" target="_blank">github →</a>
+      </div>
+      <p class="project-desc">
+        Real-time hand gesture recognition that switches between open windows - no keyboard needed.
+        Detects swipe direction by tracking hand position across 12 frames via MediaPipe Holistic.
+      </p>
+      <div class="project-meta">
+        <span class="tag">Python</span>
+        <span class="tag">MediaPipe</span>
+        <span class="tag">OpenCV</span>
+        <span class="tag">pyautogui</span>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-header">
+        <span class="project-title">Movie Recommendation System</span>
+        <a class="project-link" href="https://github.com/pecopa/movie-recommender" target="_blank">github →</a>
+      </div>
+      <p class="project-desc">
+        Dual-algorithm recommendation engine on 100k MovieLens ratings.
+        Content-based filtering via TF-IDF on genres, collaborative filtering via SVD matrix factorization.
+      </p>
+      <div class="project-meta">
+        <span class="tag">Python</span>
+        <span class="tag">scikit-learn</span>
+        <span class="tag">SciPy</span>
+        <span class="tag">SVD</span>
+        <span class="tag">TF-IDF</span>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-header">
+        <span class="project-title">Steam Game Price Predictor</span>
+        <a class="project-link" href="https://github.com/pecopa/steam-price-predictor" target="_blank">github →</a>
+      </div>
+      <p class="project-desc">
+        Predicts Steam game prices using Gradient Boosting. Includes a Streamlit web interface,
+        Steam Store API data collection, and a full joblib serialization pipeline. MAE $2.61, R² 0.953.
+      </p>
+      <div class="project-meta">
+        <span class="tag">Python</span>
+        <span class="tag">scikit-learn</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">joblib</span>
+        <span class="tag">requests</span>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-header">
+        <span class="project-title">Game Store Analytics</span>
+        <a class="project-link" href="https://github.com/pecopa/GameStoreAnalytics" target="_blank">github →</a>
+      </div>
+      <p class="project-desc">
+        SQL analytics on a relational SQLite database. Seven business queries of increasing complexity -
+        JOINs, aggregations, subqueries - visualized as a 4-panel matplotlib dashboard.
+      </p>
+      <div class="project-meta">
+        <span class="tag">Python</span>
+        <span class="tag">SQLite</span>
+        <span class="tag">SQL</span>
+        <span class="tag">matplotlib</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Education -->
+<section id="education">
+  <div class="container">
+    <p class="section-heading reveal">Education</p>
+
+    <div class="entry reveal">
+      <div class="entry-header">
+        <span class="entry-title">Higher School of Technology and Energetics</span>
+        <span class="entry-date">2024 - 2028</span>
+      </div>
+      <p class="entry-place">Artificial Intelligence in Information Networks</p>
+      <p class="entry-desc">
+        Currently in 3rd year. Coursework covers machine learning, neural networks,
+        computer vision, and information systems.
+      </p>
+    </div>
+
+    <!-- Languages -->
+    <p class="section-heading reveal" style="margin-top: 48px;">Languages</p>
+    <div class="lang-list reveal">
+      <div class="lang-item">
+        <span class="lang-name">Russian</span>
+        <span class="lang-level">Native</span>
+      </div>
+      <div class="lang-item">
+        <span class="lang-name">English</span>
+        <span class="lang-level">B2 - reading docs, writing code</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.12 }
+  );
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
